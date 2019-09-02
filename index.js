@@ -8,7 +8,7 @@ module.exports = function (app, options) {
       filter = ctx.args.filter.where;
     }
 
-    if (!ctx.res._headerSent) {
+    if (!ctx.res._headerSent && !ctx.res.get('X-Total-Count')) {
       this.count(filter, function (err, count) {
         ctx.res.set('X-Total-Count', count);
         next();
@@ -18,7 +18,7 @@ module.exports = function (app, options) {
     }
   };
   var pattern = options && Array.isArray(options.pattern) ? options.pattern : ['*.find'];
-  for (var i=pattern.length-1; i>=0; i--) {
+  for (var i = pattern.length - 1; i >= 0; i--) {
     remotes.after(pattern[i], applyXTotal);
   }
 
@@ -30,28 +30,28 @@ module.exports = function (app, options) {
 
 
   var models = app.models();
- 
-  for(let model of models) {
-    for(let relationMethodName of relationMethodNames) {
+
+  for (let model of models) {
+    for (let relationMethodName of relationMethodNames) {
       model.afterRemote(relationMethodName, function (ctx, output, next) {
         // Get Model name (final model)
         //TODO check if works in all cases
-       
+
         const relatedModel = app.models[ctx.resultType[0]];
-        
+
         var filter;
         if (ctx.args && ctx.args.filter) {
           filter = ctx.args.filter.where;
         }
-        relatedModel.count(filter, function(err, count) {
-          if(err) {
+        relatedModel.count(filter, function (err, count) {
+          if (err) {
             throw new Error(err);
           }
-          if (!ctx.res._headerSent) {
+          if (!ctx.res._headerSent && !ctx.res.get('X-Total-Count')) {
             ctx.res.set('X-Total-Count', count);
             next();
           } else {
-            throw new Error('Headers already sent !'); 
+            throw new Error('Headers already sent !');
           }
         });
       });
