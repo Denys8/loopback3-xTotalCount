@@ -1,6 +1,6 @@
 {
-  "name": "loopback3-xtotalcount",
-  "version": "0.1.2",
+  "name": "xtotalcount-loopback",
+  "version": "0.3.1",
   "description": "Add X-Total-Count header to all search requests for Loopback 3.0",
   "main": "index.js",
   "scripts": {
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/kimkha/loopback3-xTotalCount.git"
+    "url": "https://github.com/Denys8/loopback3-xTotalCount.git"
   },
   "keywords": [
     "loopback",
@@ -17,10 +17,6 @@
     "X-Total-Count",
     "json-server"
   ],
-  "author": "Nguyen Kim Kha",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/kimkha/loopback3-xTotalCount/issues"
-  },
-  "homepage": "https://github.com/kimkha/loopback3-xTotalCount#README.md"
+  "author": "Yevtushenko Denis",
+  "license": "MIT"
 }
